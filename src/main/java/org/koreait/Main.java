@@ -13,10 +13,11 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         System.out.println("==프로그램 시작==");
 
-        makeTestData();
+        articleMakeTestData();
+        memberMakeTestData();
 
         int lastArticleId = 3;
-        int lastMemberId = 0;
+        int lastMemberId = 3;
 
         while (true) {
             System.out.print("명령어) ");
@@ -191,12 +192,6 @@ public class Main {
     }
 
     private static Article getArticleById(int id) {
-//        for (int i = 0; i < articles.size(); i++) {
-//            Article article = articles.get(i);
-//            if (article.getId() == id) {
-//                return article;
-//            }
-//        }
         for (Article article : articles) {
             if (article.getId() == id) {
                 return article;
@@ -205,11 +200,18 @@ public class Main {
         return null;
     }
 
-    private static void makeTestData() {
-        System.out.println("테스트 데이터 생성");
+    private static void articleMakeTestData() {
+        System.out.println("게시글 테스트 데이터 생성");
         articles.add(new Article(1, "2023-12-12 12:12:12", "2023-12-12 12:12:12", "제목123", "내용1"));
         articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목72", "내용2"));
         articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목1233", "내용3"));
+    }
+
+    private static void memberMakeTestData() {
+        System.out.println("회원 테스트 데이터 생성");
+        members.add(new Member(1, Util.getNow(), "test1", "test1", "test1"));
+        members.add(new Member(2, Util.getNow(), "test2", "test2", "test2"));
+        members.add(new Member(3, Util.getNow(), "test3", "test3", "test3"));
     }
 }
 
