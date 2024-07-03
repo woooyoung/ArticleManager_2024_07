@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class Main {
 
     static List<Article> articles = new ArrayList<>();
+    static List<Member> members = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -15,6 +16,7 @@ public class Main {
         makeTestData();
 
         int lastArticleId = 3;
+        int lastMemberId = 0;
 
         while (true) {
             System.out.print("명령어) ");
@@ -28,7 +30,43 @@ public class Main {
                 break;
             }
 
-            if (cmd.equals("article write")) {
+            if (cmd.equals("member join")) {
+                System.out.println("==회원가입==");
+                int id = lastMemberId + 1;
+                String regDate = Util.getNow();
+                String loginId = null;
+                while (true) {
+                    System.out.print("로그인 아이디 : ");
+                    loginId = sc.nextLine().trim();
+                    if (isJoinableLoginId(loginId) == false) {
+                        System.out.println("이미 사용중이야");
+                        continue;
+                    }
+                    break;
+                }
+                String loginPw = null;
+                while (true) {
+                    System.out.print("비밀번호 : ");
+                    loginPw = sc.nextLine();
+                    System.out.print("비밀번호 확인 : ");
+                    String loginPwConfirm = sc.nextLine();
+
+                    if (loginPw.equals(loginPwConfirm) == false) {
+                        System.out.println("비번 다시 확인해");
+                        continue;
+                    }
+                    break;
+                }
+
+                System.out.print("이름 : ");
+                String name = sc.nextLine();
+
+                Member member = new Member(id, regDate, loginId, loginPw, name);
+                members.add(member);
+
+                System.out.println(id + "번 회원이 가입되었습니다");
+                lastMemberId++;
+            } else if (cmd.equals("article write")) {
                 System.out.println("==게시글 작성==");
                 int id = lastArticleId + 1;
                 String regDate = Util.getNow();
@@ -143,6 +181,15 @@ public class Main {
 
     }
 
+    private static boolean isJoinableLoginId(String loginId) {
+        for (Member member : members) {
+            if (member.getLoginId().equals(loginId)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static Article getArticleById(int id) {
 //        for (int i = 0; i < articles.size(); i++) {
 //            Article article = articles.get(i);
@@ -163,6 +210,62 @@ public class Main {
         articles.add(new Article(1, "2023-12-12 12:12:12", "2023-12-12 12:12:12", "제목123", "내용1"));
         articles.add(new Article(2, Util.getNow(), Util.getNow(), "제목72", "내용2"));
         articles.add(new Article(3, Util.getNow(), Util.getNow(), "제목1233", "내용3"));
+    }
+}
+
+class Member {
+    private int id;
+    private String regDate;
+    private String loginId;
+    private String loginPw;
+    private String name;
+
+    public Member(int id, String regDate, String loginId, String loginPw, String name) {
+        this.id = id;
+        this.regDate = regDate;
+        this.loginId = loginId;
+        this.loginPw = loginPw;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public void setRegDate(String regDate) {
+        this.regDate = regDate;
+    }
+
+    public String getLoginId() {
+        return loginId;
+    }
+
+    public void setLoginId(String loginId) {
+        this.loginId = loginId;
+    }
+
+    public String getLoginPw() {
+        return loginPw;
+    }
+
+    public void setLoginPw(String loginPw) {
+        this.loginPw = loginPw;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 
