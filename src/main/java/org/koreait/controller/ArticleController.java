@@ -1,4 +1,7 @@
-package org.koreait;
+package org.koreait.controller;
+
+import org.koreait.util.Util;
+import org.koreait.dto.Article;
 
 import java.util.ArrayList;
 import java.util.List;
