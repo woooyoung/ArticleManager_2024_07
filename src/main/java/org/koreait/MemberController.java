@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class MemberController {
+public class MemberController extends Controller {
 
-    Scanner sc;
-    List<Member> members;
+    private Scanner sc;
+    private List<Member> members;
+    private String cmd;
 
     private int lastMemberId = 3;
 
@@ -16,7 +17,20 @@ public class MemberController {
         members = new ArrayList<>();
     }
 
-    public void doJoin() {
+    public void doAction(String cmd, String actionMethodName) {
+        this.cmd = cmd;
+
+        switch (actionMethodName) {
+            case "join":
+                doJoin();
+                break;
+            default:
+                System.out.println("명령어 확인 (actionMethodName) 오류");
+                break;
+        }
+    }
+
+    private void doJoin() {
         System.out.println("==회원가입==");
         int id = lastMemberId + 1;
         String regDate = Util.getNow();
